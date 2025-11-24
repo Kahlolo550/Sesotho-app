@@ -1,0 +1,289 @@
+/* --- 0. ROOT & FONT DEFINITIONS --- */
+.root-pane {
+    -fx-background-color: #1a1a2e; /* Deep purple/navy background */
+}
+
+/* Fallback font or specific Basotho-themed font if available, otherwise a clean sans-serif */
+* {
+    -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -fx-text-fill: #e0e0e0; /* Light text for dark background */
+}
+
+/* --- 1. TOP BAR & NAVIGATION --- */
+.top-bar {
+    -fx-background-color: #0f0f1b; /* Slightly darker bar */
+    -fx-padding: 15px 30px;
+    -fx-border-color: #ff9900; /* Orange/Gold accent */
+    -fx-border-width: 0 0 2px 0;
+    -fx-spacing: 40px;
+    -fx-alignment: center;
+}
+
+.category-level-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4c77ba; /* Blue accent */
+}
+
+.score-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #e0e0e0;
+}
+
+.quit-button {
+    -fx-background-color: #e44d26; /* Red accent for quit */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 18px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.quit-button:hover {
+    -fx-background-color: #c43a1a;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-transition: all 0.2s ease-out;
+}
+
+/* --- 2. MAIN MENU (menu-panel) --- */
+.menu-panel {
+    -fx-background-color: #1a1a2e;
+    -fx-padding: 40px;
+    -fx-spacing: 25px;
+    -fx-border-radius: 10px;
+}
+
+.menu-panel Label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #e0e0e0;
+    -fx-padding: 5px;
+}
+
+.menu-panel .level-box {
+    -fx-spacing: 15px;
+}
+
+.unlocked-level, .locked-level {
+    -fx-background-radius: 8px;
+    -fx-font-weight: bold;
+    -fx-pref-height: 50px;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 2, 2);
+    -fx-transition: all 0.3s ease-out;
+}
+
+.unlocked-level {
+    -fx-background-color: #4c77ba; /* Vibrant blue */
+    -fx-text-fill: white;
+}
+
+.unlocked-level:hover {
+    -fx-background-color: #6a95e0;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.locked-level {
+    -fx-background-color: #33334f; /* Muted/greyed out */
+    -fx-text-fill: #8888aa;
+    -fx-cursor: default;
+}
+
+/* --- 3. GAME PANEL & CONTAINERS --- */
+.game-container {
+    -fx-background-color: #24243e; /* Slightly lighter background for the columns */
+    -fx-background-radius: 10px;
+    -fx-padding: 25px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 20, 0.5, 0, 0);
+}
+
+.question-number-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #ff9900; /* Orange accent */
+    -fx-font-weight: 500;
+}
+
+.question-text-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 0 20px 0;
+    -fx-min-height: 80px; /* Ensure layout doesn't jump */
+}
+
+/* --- 4. OPTIONS AND FEEDBACK --- */
+.options-vbox {
+    -fx-spacing: 10px;
+}
+
+.option-button {
+    -fx-background-color: #33334f;
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 18px;
+    -fx-padding: 15px 10px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-border-color: #4c77ba;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 0);
+    -fx-transition: all 0.15s ease-out;
+}
+
+.option-button:hover:enabled {
+    -fx-background-color: #4c77ba;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.02;
+}
+
+/* State changes (Correct/Incorrect) */
+.correct-answer {
+    -fx-background-color: #39b74a; /* Bright Green */
+    -fx-text-fill: white;
+    -fx-border-color: #39b74a;
+    -fx-border-width: 2px;
+}
+
+.incorrect-answer {
+    -fx-background-color: #e44d26; /* Bright Red */
+    -fx-text-fill: white;
+    -fx-border-color: #e44d26;
+    -fx-border-width: 2px;
+}
+
+.feedback-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 0 0 0;
+    -fx-min-height: 30px; /* Layout stability */
+}
+
+/* --- 5. MEDIA & REPLAY --- */
+.media-stack {
+    -fx-border-color: #4c77ba;
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-background-color: black;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 20, 0.7, 0, 0);
+}
+
+.replay-button {
+    -fx-background-color: #ff9900; /* Orange/Gold */
+    -fx-text-fill: #1a1a2e;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.replay-button:hover {
+    -fx-background-color: #ffa520;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* --- 6. PROGRESS BAR & TIMER --- */
+.timer-bar {
+    -fx-accent: #39b74a; /* Default Green */
+    -fx-control-inner-background: #0f0f1b; /* Track color */
+    -fx-background-radius: 10;
+    -fx-padding: 0;
+}
+
+.timer-bar .bar {
+    -fx-background-color: linear-gradient(to right, derive(-fx-accent, 20%), -fx-accent);
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+}
+
+/* Dynamic Timer Colors (Set by Java code using getStyleClass().add) */
+.timer-green .bar {
+    -fx-background-color: #39b74a;
+}
+.timer-yellow .bar {
+    -fx-background-color: #ffcc00; /* Yellow */
+}
+.timer-red .bar {
+    -fx-background-color: #e44d26; /* Red */
+}
+
+/* --- 7. LEVEL SUMMARY & STARS --- */
+.center-summary-panel {
+    -fx-background-color: #24243e;
+    -fx-background-radius: 15px;
+    -fx-padding: 50px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 30, 0.7, 0, 0);
+    -fx-max-width: 600px;
+    -fx-spacing: 30px;
+}
+
+.summary-title-pass {
+    -fx-text-fill: #39b74a; /* Green */
+}
+
+.summary-title-fail {
+    -fx-text-fill: #e44d26; /* Red */
+}
+
+/* Star Styles */
+.star-gold {
+    -fx-text-fill: gold;
+}
+.star-silver {
+    -fx-text-fill: silver;
+}
+.star-bronze {
+    -fx-text-fill: #cd7f32; /* Bronze */
+}
+.star-fail {
+    -fx-text-fill: #444455; /* Dark grey placeholder */
+}
+
+.control-button {
+    -fx-background-color: #ff9900;
+    -fx-text-fill: #1a1a2e;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-padding: 15px 30px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.control-button:hover {
+    -fx-background-color: #ffa520;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* --- 8. KEYFRAME ANIMATIONS (CSS only) --- */
+
+/* Note: JavaFX CSS does not support true @keyframes for complex animation,
+   but uses the -fx-transition property for transitions and Scale/Translate
+   transitions controlled by the Java code for complex effects like shake/pulse.
+   The styles below enhance the Java-controlled animations:
+*/
+
+/* Transition properties for smooth hover effects */
+.option-button, .unlocked-level, .quit-button, .replay-button, .control-button {
+    -fx-transition: -fx-background-color 0.2s ease-out, -fx-scale-x 0.2s ease-out, -fx-scale-y 0.2s ease-out, -fx-border-color 0.2s ease-out;
+}
+
+/* Styles for the Java-driven animations (Shake and Scale) */
+.incorrect-answer {
+    /* Base style for shake */
+    -fx-translate-x: 0;
+    -fx-transition: -fx-translate-x 0.05s ease-out;
+}
+
+.correct-answer {
+    /* Base style for pulse */
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+    -fx-transition: -fx-scale-x 0.3s ease-out, -fx-scale-y 0.3s ease-out;
+}
