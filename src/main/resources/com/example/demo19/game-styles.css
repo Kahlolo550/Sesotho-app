@@ -1,15 +1,15 @@
-/* --- 0. ROOT & FONT DEFINITIONS --- */
+
 .root-pane {
-    -fx-background-color: #1a1a2e; /* Deep purple/navy background */
+    -fx-background-color: #1a1a2e;
 }
 
-/* Fallback font or specific Basotho-themed font if available, otherwise a clean sans-serif */
+
 * {
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    -fx-text-fill: #e0e0e0; /* Light text for dark background */
+    -fx-text-fill: #e0e0e0;
 }
 
-/* --- 1. TOP BAR & NAVIGATION --- */
+/*  TOP BAR and NAVIGATION  */
 .top-bar {
     -fx-background-color: #0f0f1b; /* Slightly darker bar */
     -fx-padding: 15px 30px;
@@ -32,7 +32,7 @@
 }
 
 .quit-button {
-    -fx-background-color: #e44d26; /* Red accent for quit */
+    -fx-background-color: #e44d26;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8px 18px;
@@ -48,7 +48,7 @@
     -fx-transition: all 0.2s ease-out;
 }
 
-/* --- 2. MAIN MENU (menu-panel) --- */
+/* MAIN MENU (menu-panel)  */
 .menu-panel {
     -fx-background-color: #1a1a2e;
     -fx-padding: 40px;
@@ -88,14 +88,14 @@
 }
 
 .locked-level {
-    -fx-background-color: #33334f; /* Muted/greyed out */
+    -fx-background-color: #33334f;
     -fx-text-fill: #8888aa;
     -fx-cursor: default;
 }
 
-/* --- 3. GAME PANEL & CONTAINERS --- */
+/*  GAME PANEL and CONTAINERS */
 .game-container {
-    -fx-background-color: #24243e; /* Slightly lighter background for the columns */
+    -fx-background-color: #24243e;
     -fx-background-radius: 10px;
     -fx-padding: 25px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 20, 0.5, 0, 0);
@@ -112,10 +112,10 @@
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
     -fx-padding: 10px 0 20px 0;
-    -fx-min-height: 80px; /* Ensure layout doesn't jump */
+    -fx-min-height: 80px;
 }
 
-/* --- 4. OPTIONS AND FEEDBACK --- */
+/*OPTIONS AND FEEDBACK */
 .options-vbox {
     -fx-spacing: 10px;
 }
@@ -161,7 +161,7 @@
     -fx-min-height: 30px; /* Layout stability */
 }
 
-/* --- 5. MEDIA & REPLAY --- */
+/* MEDIA and REPLAY */
 .media-stack {
     -fx-border-color: #4c77ba;
     -fx-border-width: 3px;
@@ -186,7 +186,7 @@
     -fx-scale-y: 1.05;
 }
 
-/* --- 6. PROGRESS BAR & TIMER --- */
+/* PROGRESS BAR and TIMER  */
 .timer-bar {
     -fx-accent: #39b74a; /* Default Green */
     -fx-control-inner-background: #0f0f1b; /* Track color */
@@ -200,7 +200,7 @@
     -fx-background-radius: 10;
 }
 
-/* Dynamic Timer Colors (Set by Java code using getStyleClass().add) */
+/*timer colors*/
 .timer-green .bar {
     -fx-background-color: #39b74a;
 }
@@ -211,7 +211,7 @@
     -fx-background-color: #e44d26; /* Red */
 }
 
-/* --- 7. LEVEL SUMMARY & STARS --- */
+/* LEVEL SUMMARY & STARS */
 .center-summary-panel {
     -fx-background-color: #24243e;
     -fx-background-radius: 15px;
@@ -238,10 +238,10 @@
     -fx-text-fill: silver;
 }
 .star-bronze {
-    -fx-text-fill: #cd7f32; /* Bronze */
+    -fx-text-fill: #cd7f32;
 }
 .star-fail {
-    -fx-text-fill: #444455; /* Dark grey placeholder */
+    -fx-text-fill: #444455;
 }
 
 .control-button {
@@ -261,13 +261,6 @@
     -fx-scale-y: 1.05;
 }
 
-/* --- 8. KEYFRAME ANIMATIONS (CSS only) --- */
-
-/* Note: JavaFX CSS does not support true @keyframes for complex animation,
-   but uses the -fx-transition property for transitions and Scale/Translate
-   transitions controlled by the Java code for complex effects like shake/pulse.
-   The styles below enhance the Java-controlled animations:
-*/
 
 /* Transition properties for smooth hover effects */
 .option-button, .unlocked-level, .quit-button, .replay-button, .control-button {
@@ -276,7 +269,7 @@
 
 /* Styles for the Java-driven animations (Shake and Scale) */
 .incorrect-answer {
-    /* Base style for shake */
+
     -fx-translate-x: 0;
     -fx-transition: -fx-translate-x 0.05s ease-out;
 }
