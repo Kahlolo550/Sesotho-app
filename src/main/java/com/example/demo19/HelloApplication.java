@@ -152,8 +152,7 @@ public class HelloApplication extends Application {
         root.getStyleClass().add("root-pane");
 
 
-        // --- 5. Initialize Controller ---
-        // NOTE: btnDress removed from this list
+
         gameController = new GameController(
                 categoryLevelLabel, scoreLabel,
                 questionNumberLabel, questionTextLabel,

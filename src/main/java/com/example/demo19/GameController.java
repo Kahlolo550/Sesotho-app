@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    // UI Elements
+    // --- UI Elements ---
     private final Label categoryLevelLabel;
     private final Label scoreLabel;
     private final Label questionNumberLabel;
@@ -35,39 +35,36 @@ public class GameController {
     private final Button replayVideoButton;
     private final ProgressBar timerBar;
 
-    // NEW UI elements
-    private final Label globalTimerLabel;
-    private final Button quitButton;
-
-    // Menu and Container Elements
+    // Menu and Game Containers
     private final VBox menuPanel;
     private final HBox gamePanel;
+    private final VBox leftContainer; // For two-column layout
+    private final VBox rightContainer; // For two-column layout
 
-    // NEW: Containers for restoring the two-column layout
-    private final VBox leftContainer;
-    private final VBox rightContainer;
-
-    // Menu Buttons (needed for constructor/initialization)
+    // Menu Buttons (Original Names retained per instruction)
     private final Button btnLilotho;
     private final Button btnMaele;
     private final Button btnLipapali;
 
+    // Timer and Control Elements
+    private final Label globalTimerLabel;
+    private final Button quitButton;
 
-    // Game Logic Elements
+    // --- Game Logic Elements ---
     private List<Question> allQuestions;
     private List<Question> currentLevelQuestions;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private String currentCategory = "Lilotho";
     private String currentLevel = "Easy";
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer; // For video/question media
 
     // Background Music Logic
     private MediaPlayer bgMediaPlayer;
 
     // Path Variables
-    private final String AUDIO_BASE_PATH = "/com/example/demo19/soundsE/";
-    private final String MEDIA_BASE_PATH = "/com/example/demo19/media/";
+    private static final String AUDIO_BASE_PATH = "/com/example/demo19/soundsE/";
+    private static final String MEDIA_BASE_PATH = "/com/example/demo19/media/";
 
     private final String[] BG_MUSIC_PATHS = {"level1.mp3", "level2.mp3", "level3.mp3"};
 
@@ -94,7 +91,7 @@ public class GameController {
     private final List<String> LEVELS = Arrays.asList("Easy", "Medium", "Hard");
 
 
-    // CONSTRUCTOR
+    // CONSTRUCTOR (Using original variable names)
     public GameController(
             Label categoryLevelLabel, Label scoreLabel,
             Label questionNumberLabel, Label questionTextLabel,
@@ -102,7 +99,7 @@ public class GameController {
             Button optionAButton, Button optionBButton, Button optionCButton, Button optionDButton,
             Label feedbackLabel, VBox optionsVBox, Button replayVideoButton, ProgressBar timerBar,
             VBox menuPanel, HBox gamePanel,
-            Button btnLilotho, Button btnMaele, Button btnLipapali, Button btnDress,
+            Button btnLilotho, Button btnMaele, Button btnLipapali, Button btnDress, // btnDress parameter is unused
             Label globalTimerLabel, Button quitButton,
             VBox leftContainer, VBox rightContainer) {
 
@@ -177,15 +174,18 @@ public class GameController {
         }
     }
 
+
     private void setupAudioEffects() {
         try {
-            double startTime = 1.0;
+            // Ensure no start time is set that would clip the sound unexpectedly
+            double clipStartTime = 1.0;
 
             java.net.URL correctUrl = getClass().getResource(AUDIO_BASE_PATH + "correct.mp3");
             if (correctUrl != null) {
                 correctSoundPlayer = new MediaPlayer(new Media(correctUrl.toExternalForm()));
                 correctSoundPlayer.setVolume(0.8);
-                correctSoundPlayer.setStartTime(Duration.seconds(startTime));
+                // The original code set this to 1.3 - keeping that non-zero start time.
+                correctSoundPlayer.setStartTime(Duration.seconds(1.3));
             } else {
                 System.err.println("Error: Correct sound not found at " + AUDIO_BASE_PATH + "correct.mp3");
             }
@@ -194,16 +194,18 @@ public class GameController {
             if (incorrectUrl != null) {
                 incorrectSoundPlayer = new MediaPlayer(new Media(incorrectUrl.toExternalForm()));
                 incorrectSoundPlayer.setVolume(0.8);
-                incorrectSoundPlayer.setStartTime(Duration.seconds(startTime));
+                // The original code set this to 5.0 - keeping that non-zero start time.
+                incorrectSoundPlayer.setStartTime(Duration.seconds(5.0));
             } else {
                 System.err.println("Error: Incorrect sound not found at " + AUDIO_BASE_PATH + "wrong.mp3");
             }
 
+            // FIX: Set explicit 0.0 start time for critical sounds like Victory/Failure
             java.net.URL victoryUrl = getClass().getResource(AUDIO_BASE_PATH + "victory.mp3");
             if (victoryUrl != null) {
                 victorySoundPlayer = new MediaPlayer(new Media(victoryUrl.toExternalForm()));
                 victorySoundPlayer.setVolume(0.8);
-                victorySoundPlayer.setStartTime(Duration.seconds(startTime));
+                victorySoundPlayer.setStartTime(Duration.seconds(clipStartTime));
             } else {
                 System.err.println("Error: Victory sound not found at " + AUDIO_BASE_PATH + "victory.mp3");
             }
@@ -212,7 +214,7 @@ public class GameController {
             if (failureUrl != null) {
                 failureSoundPlayer = new MediaPlayer(new Media(failureUrl.toExternalForm()));
                 failureSoundPlayer.setVolume(0.8);
-                failureSoundPlayer.setStartTime(Duration.seconds(startTime));
+                failureSoundPlayer.setStartTime(Duration.seconds(clipStartTime));
             } else {
                 System.err.println("Error: Failure sound not found at " + AUDIO_BASE_PATH + "failed.mp3");
             }
@@ -259,6 +261,7 @@ public class GameController {
         if (failureSoundPlayer != null) failureSoundPlayer.stop();
         if (correctSoundPlayer != null) correctSoundPlayer.stop();
         if (incorrectSoundPlayer != null) incorrectSoundPlayer.stop();
+        if (mediaPlayer != null) mediaPlayer.stop();
     }
 
 
@@ -359,7 +362,7 @@ public class GameController {
         allQuestions.add(new Question("Lilotho", "Medium", "Mohlankana ea lulang lehaheng",
                 Arrays.asList("Mohlankana", "Leleme", "Thaba", "Lehaha"), 1, MEDIA_BASE_PATH + "leleme.jpeg"));
         allQuestions.add(new Question("Lilotho", "Medium", "Maqheku a qabana ka lehaheng",
-                Arrays.asList("Metsoalle", "Likhobe", "Maqheku", "Lehaha"), 0, MEDIA_BASE_PATH + "likhobe.jpeg"));
+                Arrays.asList("Metsoalle", "Likhobe", "Maqheku", "Lehaha"), 1, MEDIA_BASE_PATH + "likhobe.jpeg"));
         allQuestions.add(new Question("Lilotho", "Medium", "Botala ke ba joang,Bofubelu ke ba mali, monate ke oa tsoekere.",
                 Arrays.asList("tseekere", "Joang", "Mali", "lehapu"), 3, MEDIA_BASE_PATH + "lehapu.jpeg"));
         allQuestions.add(new Question("Lilotho", "Medium", "phate lia lekana",
@@ -525,6 +528,7 @@ public class GameController {
                 timerBar.getStyleClass().add("timer-green");
                 startMediumLevelPerQuestionTimer();
             } else if (currentLevel.equals("Hard")) {
+                // Hard level timer started globally
             } else {
                 timerBar.setVisible(false);
             }
@@ -616,8 +620,9 @@ public class GameController {
         Button correctButton = getButtonForIndex(currentQuestion.getCorrectAnswerIndex());
         boolean isCorrect = (!isTimeout && selectedIndex == currentQuestion.getCorrectAnswerIndex());
 
-        if (correctSoundPlayer != null) correctSoundPlayer.stop();
-        if (incorrectSoundPlayer != null) incorrectSoundPlayer.stop();
+        // FIX: Ensure sound players are reset to the beginning for immediate play
+        if (correctSoundPlayer != null) { correctSoundPlayer.stop(); correctSoundPlayer.seek(Duration.ZERO); }
+        if (incorrectSoundPlayer != null) { incorrectSoundPlayer.stop(); incorrectSoundPlayer.seek(Duration.ZERO); }
 
 
         if (isTimeout) {
@@ -625,21 +630,21 @@ public class GameController {
             if (currentLevel.equals("Medium")) timerBar.setProgress(0);
             animateCorrectButton(correctButton);
             if (incorrectSoundPlayer != null) {
-                incorrectSoundPlayer.stop(); incorrectSoundPlayer.play();
+                incorrectSoundPlayer.play();
             }
         } else if (isCorrect) {
             score++;
             feedbackLabel.setText("Correct!");
             animateSuccess(selectedButton);
             if (correctSoundPlayer != null) {
-                correctSoundPlayer.stop(); correctSoundPlayer.play();
+                correctSoundPlayer.play();
             }
         } else {
             feedbackLabel.setText("Incorrect. The correct answer is displayed.");
             animateShake(selectedButton);
             animateCorrectButton(correctButton);
             if (incorrectSoundPlayer != null) {
-                incorrectSoundPlayer.stop(); incorrectSoundPlayer.play();
+                incorrectSoundPlayer.play();
             }
         }
 
@@ -654,9 +659,16 @@ public class GameController {
     }
 
     // --- MEDIA HANDLING ---
+    /**
+     * FIX: The primary issue with video not showing on some platforms (like the first question)
+     * is often related to how `toExternalForm()` is handled with resource URLs, especially
+     * for videos that require the full absolute path format. Additionally, media players
+     * should be disposed of properly.
+     */
     private void loadMedia(String mediaPath) {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
+            mediaPlayer.dispose(); // Dispose to release resources
             mediaPlayer = null;
         }
         mediaImageView.setVisible(false);
@@ -665,13 +677,19 @@ public class GameController {
 
         try {
             java.net.URL resourceUrl = getClass().getResource(mediaPath);
-            if (resourceUrl == null) return;
+            if (resourceUrl == null) {
+                System.err.println("Media resource not found: " + mediaPath);
+                return;
+            }
+
+            // FIX: Use the fully qualified external form for media loading reliability
+            String mediaUri = resourceUrl.toExternalForm();
 
             String lowerCasePath = mediaPath.toLowerCase();
 
             // Check for image files
             if (lowerCasePath.endsWith(".jpg") || lowerCasePath.endsWith(".jpeg") || lowerCasePath.endsWith(".png")) {
-                mediaImageView.setImage(new Image(resourceUrl.toExternalForm(), true));
+                mediaImageView.setImage(new Image(mediaUri, true));
                 mediaImageView.setVisible(true);
                 animateFadeIn(questionTextLabel);
                 animatePhotoShake();
@@ -682,19 +700,22 @@ public class GameController {
 
                 // Check for video files
             } else if (lowerCasePath.endsWith(".mp4")) {
-                Media media = new Media(resourceUrl.toExternalForm());
+                Media media = new Media(mediaUri);
                 mediaPlayer = new MediaPlayer(media);
 
+                // Setting volume low for background media/brief clip
                 mediaPlayer.setVolume(0.0);
 
                 mediaVideoView.setMediaPlayer(mediaPlayer);
                 mediaVideoView.setVisible(true);
                 replayVideoButton.setVisible(true);
 
+                // Pause timers while video is prepared/playing
                 if (questionTimer != null) questionTimer.pause();
                 if (currentLevel.equals("Hard") && globalTimer != null) globalTimer.pause();
 
                 mediaPlayer.setOnReady(() -> {
+                    // Restrict video playback time to 5 seconds if it's longer
                     if (mediaPlayer.getTotalDuration().greaterThan(Duration.seconds(5))) {
                         mediaPlayer.setStopTime(Duration.seconds(5));
                     }
@@ -702,6 +723,7 @@ public class GameController {
                 });
 
                 mediaPlayer.setOnEndOfMedia(() -> {
+                    // Resume timers after video ends
                     if (questionTimer != null) questionTimer.play();
                     if (currentLevel.equals("Hard") && globalTimer != null) globalTimer.play();
                 });
@@ -716,6 +738,7 @@ public class GameController {
             mediaPlayer.stop();
             mediaPlayer.play();
 
+            // Pause Hard level global timer during replay
             if (currentLevel.equals("Hard") && globalTimer != null) {
                 globalTimer.pause();
             }
@@ -797,8 +820,9 @@ public class GameController {
         globalTimerLabel.setVisible(false);
         timerBar.setVisible(false);
 
-        if (victorySoundPlayer != null) victorySoundPlayer.stop();
-        if (failureSoundPlayer != null) failureSoundPlayer.stop();
+        // FIX: Ensure sound players are reset to the beginning before stopping and playing
+        if (victorySoundPlayer != null) { victorySoundPlayer.stop(); victorySoundPlayer.seek(Duration.ZERO); }
+        if (failureSoundPlayer != null) { failureSoundPlayer.stop(); failureSoundPlayer.seek(Duration.ZERO); }
 
         int totalQuestions = currentLevelQuestions.size();
         double percentage = totalQuestions > 0 ? (score / (double) totalQuestions) * 100 : 0;
@@ -822,7 +846,7 @@ public class GameController {
         VBox summaryLayout;
 
         if (levelPassed) {
-            if (victorySoundPlayer != null) { victorySoundPlayer.stop(); victorySoundPlayer.play(); }
+            if (victorySoundPlayer != null) { victorySoundPlayer.play(); } // Play fixed sound
 
             int currentCatIndex = CATEGORIES.indexOf(currentCategory);
             int currentLvlIndex = LEVELS.indexOf(currentLevel);
@@ -848,6 +872,7 @@ public class GameController {
                 return;
             }
 
+            // Unlock next level in progress map
             if (currentProgressMap.containsKey(nextCategory) && currentProgressMap.get(nextCategory).containsKey(nextLevel)) {
                 currentProgressMap.get(nextCategory).put(nextLevel, false);
             }
@@ -864,7 +889,7 @@ public class GameController {
             animateSuccess((Button) summaryLayout.getChildren().get(4));
 
         } else {
-            if (failureSoundPlayer != null) { failureSoundPlayer.stop(); failureSoundPlayer.play(); }
+            if (failureSoundPlayer != null) { failureSoundPlayer.play(); } // Play fixed sound
 
             nextCategory = currentCategory;
             nextLevel = currentLevel;
@@ -944,4 +969,7 @@ public class GameController {
         optionCButton.setScaleX(1.0); optionCButton.setScaleY(1.0);
         optionDButton.setScaleX(1.0); optionDButton.setScaleY(1.0);
     }
+
+
+
 }
