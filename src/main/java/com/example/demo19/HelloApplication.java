@@ -18,18 +18,18 @@ public class HelloApplication extends Application {
     private VBox menuPanel;
     private HBox gamePanel;
 
-    // Containers for the two columns - passed to the controller
+    // Containers for the two columns will be ppassed to the controller
     private VBox leftContainer;
     private VBox rightContainer;
 
-    // Game Controller Instance
+    // Game Controller Instancee
     private GameController gameController;
 
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Basotho Culture Quiz");
 
-        // --- 1. Top Bar Elements ---
+        //  Topp Bar Elements
         Label categoryLevelLabel = new Label("Main Menu");
         categoryLevelLabel.getStyleClass().add("category-level-label");
 
@@ -49,7 +49,7 @@ public class HelloApplication extends Application {
         topBar.setPadding(new Insets(10));
         topBar.getStyleClass().add("top-bar");
 
-        // --- 2. Menu Panel (for startup) ---
+        // Menu Panel
         menuPanel = new VBox(20);
         menuPanel.setAlignment(Pos.TOP_CENTER);
         menuPanel.setPadding(new Insets(50));

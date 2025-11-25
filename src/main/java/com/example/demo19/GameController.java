@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    // --- UI Elements ---
+ //element s
     private final Label categoryLevelLabel;
     private final Label scoreLabel;
     private final Label questionNumberLabel;
@@ -38,10 +38,10 @@ public class GameController {
     // Menu and Game Containers
     private final VBox menuPanel;
     private final HBox gamePanel;
-    private final VBox leftContainer; // For two-column layout
-    private final VBox rightContainer; // For two-column layout
+    private final VBox leftContainer;
+    private final VBox rightContainer;
 
-    // Menu Buttons (Original Names retained per instruction)
+    // Menu Buttons
     private final Button btnLilotho;
     private final Button btnMaele;
     private final Button btnLipapali;
@@ -50,7 +50,7 @@ public class GameController {
     private final Label globalTimerLabel;
     private final Button quitButton;
 
-    // --- Game Logic Elements ---
+    // Game Logic Elements
     private List<Question> allQuestions;
     private List<Question> currentLevelQuestions;
     private int currentQuestionIndex = 0;
@@ -91,7 +91,7 @@ public class GameController {
     private final List<String> LEVELS = Arrays.asList("Easy", "Medium", "Hard");
 
 
-    // CONSTRUCTOR (Using original variable names)
+    // CONSTRUCTOR
     public GameController(
             Label categoryLevelLabel, Label scoreLabel,
             Label questionNumberLabel, Label questionTextLabel,
@@ -177,14 +177,14 @@ public class GameController {
 
     private void setupAudioEffects() {
         try {
-            // Ensure no start time is set that would clip the sound unexpectedly
+            //
             double clipStartTime = 1.0;
 
             java.net.URL correctUrl = getClass().getResource(AUDIO_BASE_PATH + "correct.mp3");
             if (correctUrl != null) {
                 correctSoundPlayer = new MediaPlayer(new Media(correctUrl.toExternalForm()));
                 correctSoundPlayer.setVolume(0.8);
-                // The original code set this to 1.3 - keeping that non-zero start time.
+                //
                 correctSoundPlayer.setStartTime(Duration.seconds(1.3));
             } else {
                 System.err.println("Error: Correct sound not found at " + AUDIO_BASE_PATH + "correct.mp3");
@@ -194,13 +194,13 @@ public class GameController {
             if (incorrectUrl != null) {
                 incorrectSoundPlayer = new MediaPlayer(new Media(incorrectUrl.toExternalForm()));
                 incorrectSoundPlayer.setVolume(0.8);
-                // The original code set this to 5.0 - keeping that non-zero start time.
+                //
                 incorrectSoundPlayer.setStartTime(Duration.seconds(5.0));
             } else {
                 System.err.println("Error: Incorrect sound not found at " + AUDIO_BASE_PATH + "wrong.mp3");
             }
 
-            // FIX: Set explicit 0.0 start time for critical sounds like Victory/Failure
+            //
             java.net.URL victoryUrl = getClass().getResource(AUDIO_BASE_PATH + "victory.mp3");
             if (victoryUrl != null) {
                 victorySoundPlayer = new MediaPlayer(new Media(victoryUrl.toExternalForm()));
@@ -265,7 +265,7 @@ public class GameController {
     }
 
 
-    // --- NAVIGATION METHODS ---
+    // NAVIGATION METHODS
 
     private void showMainMenu() {
         stopAllTimers();
@@ -323,7 +323,7 @@ public class GameController {
         menuPanel.setVisible(false);
         gamePanel.setVisible(true);
 
-        // --- Restore the two-column game layout ---
+        // Restore the two-column game layout
         gamePanel.getChildren().clear();
         gamePanel.getChildren().addAll(leftContainer, rightContainer);
         gamePanel.setAlignment(Pos.CENTER);
@@ -342,11 +342,11 @@ public class GameController {
     }
 
 
-    // --- QUESTION SETUP ---
+    // QUESTION SETUP
     private void setupAllQuestionsData() {
         allQuestions = new ArrayList<>();
 
-        // Lilotho - Easy (Q/A Media uses MEDIA_BASE_PATH)
+        // Lilotho - Easy
         allQuestions.add(new Question("Lilotho", "Easy", "Ke eane ke eena.",
                 Arrays.asList("Thaba", "Mahlo", "Sefate", "Lefika"), 1, MEDIA_BASE_PATH + "mahlo.mp4"));
         allQuestions.add(new Question("Lilotho", "Easy", "Ha moruti lifate li ea oa",
